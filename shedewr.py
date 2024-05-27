@@ -3,8 +3,7 @@ import base64
 import time
 from random import randint
 from aiogram import Dispatcher, Bot, types, executor
-from magic import get_response
-from shedewr import generate_image
+
 API_KEY = '7314860258:AAFaBfKUREQPj1p2Mf43wtuCYSLPkwP99xI'
 
 bot = Bot(token= API_KEY)
@@ -49,21 +48,3 @@ def generate_image(prompt_text):
             return image_data
         else:
             time.sleep(5)
-
-@dp.message_handler()
-async def handler_message(message: types.Message):
-    response_text = await get_response(message.text)
-    print(response_text)
-    await message.reply('Идет генерация!')
-    try:
-        image_data = generate_image(response_text)
-        await message.reply_photo(photo= image_data)
-    except Exception as е:
-        await message.reply(f'Произошла ошибка {е}')
-
-
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates= True)
-
-
-
